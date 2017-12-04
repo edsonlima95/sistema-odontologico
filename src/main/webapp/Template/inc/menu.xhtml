@@ -1,0 +1,104 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="menu">
+	<div id="accordion" role="tablist">
+		<ul class="ulmenu" style="padding-left: 0">
+			<li>
+				<i class="fa fa-user-plus" aria-hidden="true"></i>
+				<a data-toggle="collapse" href="#clientemenu" aria-expanded="false" aria-controls="clientemenu">Cliente</a>
+				<i class="fa fa-chevron-right seta-direita"></i>
+	        	 <ul id="clientemenu" class="collapse ulsub" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+	     			 <li>
+	     			 	<i class="fa fa-plus" aria-hidden="true"></i>
+	     			 	<h:link outcome="/cliente/CadastroCliente.xhtml">Cadastrar Cliente</h:link>
+     			 	</li>
+	     			 <li>
+	     			 	<i class="fa fa-search" aria-hidden="true"></i>
+	     			 	<h:link outcome="/cliente/PesquisaCliente.xhtml">Pesquisa Cliente</h:link>
+	     			 </li>
+	    		</ul>
+        	</li>
+        	<li>
+				<i class="fa fa-user-md" aria-hidden="true"></i>
+				<a data-toggle="collapse" href="#dentistamenu" aria-expanded="false" aria-controls="dentistamenu">Dentista</a>
+				<i class="fa fa-chevron-right seta-direita"></i>
+	        	 <ul id="dentistamenu" class="collapse ulsub" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+	     			<li>
+	     			 	<i class="fa fa-plus" aria-hidden="true"></i>
+	     			 	<h:link outcome="/dentista/CadastroDentista.xhtml">Cadastrar Dentista</h:link>
+     			 	</li>
+     			 	<li>
+	     			 	<i class="fa fa-search" aria-hidden="true"></i>
+	     			 	<h:link outcome="/dentista/PesquisaDentista.xhtml">Pesquisa Dentista</h:link>
+     			 	</li>
+	    		</ul>
+        	</li>
+        	<li>
+				<i class="fa fa-stethoscope" aria-hidden="true"></i>
+				<a data-toggle="collapse" href="#consultamenu" aria-expanded="false" aria-controls="consultamenu">Consulta</a>
+				<i class="fa fa-chevron-right seta-direita"></i>
+	        	 <ul id="consultamenu" class="collapse ulsub" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+	     			<li>
+	     			 	<i class="fa fa-plus" aria-hidden="true"></i>
+	     			 	<h:link outcome="/consulta/CadastroConsulta.xhtml">Cadastrar Consulta</h:link>
+     			 	</li>
+	     			<li>
+	     			 	<i class="fa fa-search" aria-hidden="true"></i>
+	     			 	<h:link outcome="/consulta/PesquisaConsulta.xhtml">Pesquisa Consulta</h:link>
+     			 	</li>
+	    		</ul>
+        	</li>
+        	<li>
+				<i class="fa fa-clipboard" aria-hidden="true"></i>
+				<a data-toggle="collapse" href="#Odontogramamenu" aria-expanded="false" aria-controls="Odontogramamenu">Odontograma</a>
+				<i class="fa fa-chevron-right seta-direita"></i>
+	        	 <ul id="Odontogramamenu" class="collapse ulsub" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+	     			<li>
+	     			 	<i class="fa fa-plus" aria-hidden="true"></i>
+	     			 	<h:link outcome="/odontograma/CadastroOdontograma.xhtml">Cadastrar Odontograma</h:link>
+     			 	</li>
+     			 	<li>
+	     			 	<i class="fa fa-search" aria-hidden="true"></i>
+	     			 	<h:link outcome="/odontograma/PesquisaOdontograma.xhtml">Pesquisa Odontograma</h:link>
+     			 	</li>
+	    		</ul>
+        	</li>
+        	<li>
+				<i class="fa fa-stethoscope" aria-hidden="true"></i>
+				<a data-toggle="collapse" href="#Funcionariomenu" aria-expanded="false" aria-controls="Funcionariomenu">Funcionario</a>
+				<i class="fa fa-chevron-right seta-direita"></i>
+	        	 <ul id="Funcionariomenu" class="collapse ulsub" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+	     			<li>
+	     			 	<i class="fa fa-plus" aria-hidden="true"></i>
+	     			 	<h:link outcome="/funcionario/CadastroFuncionario.xhtml">Cadastrar Funcionario</h:link>
+     			 	</li>
+     			 	<li>
+	     			 	<i class="fa fa-search" aria-hidden="true"></i>
+	     			 	<h:link outcome="/funcionario/PesquisaFuncionario.xhtml">Pesquisa Funcionario</h:link>
+     			 	</li>
+	    		</ul>
+        	</li>
+        	<li>
+				<i class="fa fa-address-card-o" aria-hidden="true"></i>
+				<a data-toggle="collapse" href="#conveniomenu" aria-expanded="false" aria-controls="conveniomenu">Convênio</a>
+				<i class="fa fa-chevron-right seta-direita"></i>
+	        	 <ul id="conveniomenu" class="collapse ulsub" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+	     			<li>
+	     			 	<i class="fa fa-plus" aria-hidden="true"></i>
+	     			 	<h:link outcome="/convenio/CadastroConvenio.xhtml">Cadastrar Convênio</h:link>
+     			 	</li>
+     			 	<li>
+	     			 	<i class="fa fa-search" aria-hidden="true"></i>
+	     			 	<h:link outcome="/convenio/PesquisaConvenio.xhtml">Pesquisa Convênio</h:link>
+     			 	</li>
+	    		</ul>
+        	</li>
+		</ul>	
+	</div>	
+	</ui:define>
+</ui:composition>

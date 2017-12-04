@@ -1,0 +1,103 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Cadastro de clientes</ui:define>
+	<ui:define name="conteudo">
+		<f:metadata>		
+			<f:viewParam value="#{cadastroClienteBean.cliente}" name="codigo"/>
+		</f:metadata>
+		<h1 class="cor-titulo">Pesquisa de clientes</h1>
+		
+		<h:form id="frmCadastroCliente">	
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Clientes" url="PesquisaCliente.xhtml" />
+			</p:breadCrumb>	
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			
+			<!-- LADO ESQUERDO -->
+			<div class="ui-g-12 ui-md-12 ui-lg-6">
+				<p:panelGrid columns="2" layout="grid"  id="panel" columnClasses="ui-grid-col-4,ui-grid-col-8">
+					<p:outputLabel value="Nome:" />
+					<p:inputText  value="#{cadastroClienteBean.cliente.nome}" required="true" requiredMessage="O campo nome é obrigatório" />
+					
+					<p:outputLabel value="Idade:" />
+						<p:inputText value="#{cadastroClienteBean.cliente.idade}" required="true"
+								label="Campo idade" requiredMessage="O campo idade é obrigatório">
+						<f:validateLongRange minimum="5" maximum="100"  />
+					</p:inputText>
+				
+					<p:outputLabel value="CPF:" />
+					<p:inputMask  mask="999.999.999-99" value="#{cadastroClienteBean.cliente.cpf}" required="true"
+									 requiredMessage="O campo cpf é obrigatório" />
+				
+					<p:outputLabel value="RG:" />
+					<p:inputMask  value="#{cadastroClienteBean.cliente.rg}" required="true" 
+								requiredMessage="O campo rg é obrigatório" />
+			
+					<p:outputLabel value="Celular de contato:" />
+					<p:inputMask  mask="(99) 99999-9999" value="#{cadastroClienteBean.cliente.celularContato}"
+								 required="true" requiredMessage="O campo celular contato é obrigatório" />
+				
+					<p:outputLabel value="Telefone de contato:" />
+					<p:inputMask  mask="(99) 9999-9999" value="#{cadastroClienteBean.cliente.telefoneContato}"  />
+						
+			</p:panelGrid>
+			</div>
+			<!-- LADO DIREITO -->
+			<div class="ui-g-12 ui-md-12 ui-lg-6">
+				<p:panelGrid columns="2" layout="grid" id="panel2" columnClasses="ui-grid-col-2,ui-grid-col-10">
+					
+					<p:outputLabel value="E-mail:" />
+					<p:inputText value="#{cadastroClienteBean.cliente.email}"  />	
+					
+					<p:outputLabel value="Endereço:" />
+						<p:inputText value="#{cadastroClienteBean.cliente.endereco}" required="true"
+									 requiredMessage="O campo endereço é obrigatório" />
+						
+						<p:outputLabel value="Bairro:" />
+						<p:inputText value="#{cadastroClienteBean.cliente.bairro}" required="true" 
+											requiredMessage="O campo bairro é obrigatório"/>
+					
+						<p:outputLabel value="Estado:" />
+						<p:selectOneMenu value="#{cadastroClienteBean.cliente.estado}"
+							 converter="estadoConverter">
+							<f:selectItem itemLabel="selecione um estado" itemDisabled="true" noSelectionOption="true"/>
+							<f:selectItems  var="estado" value="#{cadastroClienteBean.estados}"
+							 itemLabel="#{estado.nome}" itemValue="#{estado}" />
+							 <p:ajax event="itemSelect" listener="#{cadastroClienteBean.onSelect}" update="frmCadastroCliente:cidade, frmCadastroCliente:menu" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Cidade: " />
+					<p:selectOneMenu id="cidade" value="#{cadastroClienteBean.cliente.cidade}"
+					 converter="cidadeConverter">
+						<f:selectItem itemLabel="selecione uma cidade" itemDisabled="true" noSelectionOption="true"/>
+						<f:selectItems var="cidade" value="#{cadastroClienteBean.cidades}"
+						 itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
+						 
+					</p:selectOneMenu>
+				
+				</p:panelGrid>
+			</div>
+		
+			<div class="ui-g-12">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" id="panel3">
+					<p:outputLabel value="Convênios" />
+					<p:selectManyCheckbox id="menu" value="#{cadastroClienteBean.cliente.convenios}" converter="convenioConverter" >
+	      		     <f:selectItems var="convenio" value="#{cadastroClienteBean.convenios}"
+	      		     				itemLabel="#{convenio.nome}" itemValue="#{convenio}" />
+   		     				<f:attribute name="collectionType" value="java.util.ArrayList"/>
+	      			</p:selectManyCheckbox>  
+				</p:panelGrid>
+				
+				<p:commandButton value="Salvar" style="margin-right: 2pc; margin-top:20px" action="#{cadastroClienteBean.salvar}" />
+				<p:commandButton type="reset" value="Cancel" />
+			</div>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

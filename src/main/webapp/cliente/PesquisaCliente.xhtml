@@ -1,0 +1,75 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Cadastro de clientes</ui:define>
+	<ui:define name="conteudo">
+		<h1 class="cor-titulo">Pesquisa de clientes</h1>
+		<h:form id="frmCadastroCliente">
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Cliente" url="CadastroCliente.xhtml" />
+			</p:breadCrumb>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:dataTable id="tabelaCliente" var="cliente" value="#{pesquisaClienteBean.lazyClientes}"
+						 widgetVar="clienteTable" reflow="true" paginator="true" 
+						 paginatorPosition="bottom" rows="5" lazy="true" paginatorAlwaysVisible="false"
+						 >
+				<f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Buscar " />
+		                <p:inputText id="globalFilter" onkeyup="PF('clienteTable').filter()" style="width:150px" placeholder="Pesquisar"/>
+		            </p:outputPanel>
+        		</f:facet>
+        		
+				<p:column headerText="Codigo"  >
+					<h:outputText value="#{cliente.codigo}" />
+				</p:column>
+				<p:column filterBy="#{cliente.nome}" headerText="Nome" >
+					<h:outputText value="#{cliente.nome}"  />
+				</p:column>
+				<p:column filterBy="#{cliente.idade}" headerText="Idade">
+					<h:outputText value="#{cliente.idade}"  />
+				</p:column>
+				<p:column headerText="Telefone" style="width: 200px">
+					<h:outputText value="#{cliente.telefoneContato}" />
+				</p:column>
+				<p:column headerText="Celular" style="width: 200px">
+					<h:outputText value="#{cliente.celularContato}" />
+				</p:column>
+				<p:column filterBy="#{cliente.cidade.nome}" headerText="Cidade" >
+					<h:outputText value="#{cliente.cidade.nome}" />
+				</p:column>
+				 <p:column headerText="Convênios">
+					<p:commandButton icon="fa fa-list" onclick="PF('modalC').show();"
+									action="#{pesquisaClienteBean.buscarConvenios}" update="frmCadastroCliente:listaConvenio">
+						<f:setPropertyActionListener value="#{cliente}" target="#{pesquisaClienteBean.clienteConvenios}"/>
+					</p:commandButton>
+				</p:column> 
+				<p:column headerText="Ações" >
+					<p:button outcome="CadastroCliente" icon="fa fa-edit">
+						<f:param name="codigo" value="#{cliente.codigo}" />
+					</p:button>
+					<p:commandButton icon="fa fa-trash" action="#{pesquisaClienteBean.delete}" update="tabelaCliente">
+     				   <p:confirm header="Confirmation" message="Tem certeza que deseja deletar o cliente?" icon="ui-icon-alert" />
+   					   <f:setPropertyActionListener value="#{cliente}" target="#{pesquisaClienteBean.clineteSelecionada}" />
+   					   <p:ajax update="frmCadastroCliente:tabelaCliente" />
+   					</p:commandButton>
+   					 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		       			 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		      			 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		   			 </p:confirmDialog>
+				</p:column>
+			</p:dataTable>
+			<p:dialog  header="Convênios" widgetVar="modalC" modal="true" width="400">
+  					<p:dataList id="listaConvenio" var="convenio" value="#{pesquisaClienteBean.clienteConvenios.convenios}">
+  						Nome: #{convenio.nome} - #{convenio.contato}
+  						<br/><br />
+  					</p:dataList>
+			</p:dialog> 
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

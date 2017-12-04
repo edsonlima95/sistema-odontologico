@@ -1,0 +1,61 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Pesquisa de funcionarios</ui:define>
+	<ui:define name="conteudo">
+		<h1 class="cor-titulo">Pesquisa  funcionario</h1>
+		<h:form id="frmFuncionario">
+			<p:breadCrumb>				
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Funcionario" url="/funcionario/CadastroFuncionario.xhtml" />
+			</p:breadCrumb>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:dataTable id="tabelaFuncionario" var="funcionario" value="#{pesquisaFuncionarioBean.lazyFuncionarios}"
+							 reflow="true" paginator="true" lazy="true"
+							 paginatorAlwaysVisible="false" rows="5" paginatorPosition="bottom" widgetVar="funcionarioTable">
+			 	
+			 	<f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Buscar " />
+		                <p:inputText id="globalFilter" onkeyup="PF('funcionarioTable').filter()" style="width:150px" placeholder="Digite o nome"/>
+		            </p:outputPanel>
+        		
+        		</f:facet>
+			 
+			 	<p:column headerText="Codigo">
+			 		<h:outputText value="#{funcionario.codigo}" />
+			 	</p:column>
+			 	
+			 	<p:column filterBy="#{funcionario.nome}" headerText="Nome" >
+			 		<h:outputText value="#{funcionario.nome}" />
+			 	</p:column>
+			 	
+			 	<p:column headerText="Contato">
+			 		<h:outputText value="#{funcionario.telefoneContato}" />
+			 	</p:column>
+			 	
+			 	<p:column  filterBy="#{funcionario.nivel}" headerText="Tipo">
+			 		<h:outputText value="#{funcionario.nivel == 1 ? 'Admin' : 'Funcionario'}" />
+			 	</p:column>
+				
+				<p:column headerText="Ações" >
+					<p:button outcome="CadastroFuncionario" icon="fa fa-edit">
+						<f:param name="codigo" value="#{funcionario.codigo}" />
+					</p:button>
+					<p:commandButton icon="fa fa-trash" action="#{pesquisaFuncionarioBean.deletar}" update="tabelaFuncionario" >
+     				   <p:confirm header="Confirmation" message="Tem certeza que deseja deletar o funcionario?" icon="ui-icon-alert" />
+   					   <f:setPropertyActionListener value="#{funcionario}" target="#{pesquisaFuncionarioBean.funcionarioSelecionado}" />
+   					</p:commandButton>
+   					 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		       			 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		      			 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		   			 </p:confirmDialog> 
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

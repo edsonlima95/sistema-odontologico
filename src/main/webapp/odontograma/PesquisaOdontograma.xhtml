@@ -1,0 +1,109 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Cadastro de clientes</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmCadastroOdont">
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Odontograma" url="CadastroOdontograma.xhtml" />
+			</p:breadCrumb>	
+			<p:toolbar>
+				<f:facet name="left">
+					<p:selectOneMenu value="#{pesquisaOdontogramaBean.clienteSelecionado}">
+						<f:selectItem itemLabel="Selecione um cliente" noSelectionOption="true"/>
+						<f:selectItems var="cliente" value="#{pesquisaOdontogramaBean.clientes}" itemLabel="#{cliente.nome}" itemValue="#{cliente}"/>
+						<p:ajax event="itemSelect" listener="#{pesquisaOdontogramaBean.buscarPorCliente}" 
+								update="tabelaOdonto"/>
+					</p:selectOneMenu>
+				</f:facet>
+			</p:toolbar>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:dataTable id="tabelaOdonto" var="odonto" value="#{pesquisaOdontogramaBean.odontogramas}"
+						  reflow="true">
+				<p:column headerText="Codigo"  >
+					<h:outputText value="#{odonto.codigo}" />
+				</p:column>
+				<p:column headerText="Cliente" >
+					<h:outputText value="#{odonto.cliente.nome}"  />
+				</p:column>
+				<p:column headerText="Dentista">
+					<h:outputText value="#{odonto.dentista.nome}"  />
+				</p:column>
+				<p:column headerText="Valor" style="width: 200px">
+					<h:outputText value="#{odonto.valor}"/>
+				</p:column>
+				<p:column headerText="Status" style="width: 200px">
+					<h:outputText value="#{odonto.status}" />
+				</p:column>
+				<p:column headerText="Data" >
+					<h:outputText value="#{odonto.data}">
+						<f:convertDateTime pattern="dd-MM-yyyy"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Dentes">
+					<p:commandButton icon="fa fa-search" action="#{pesquisaOdontogramaBean.buscarDentes}" onclick="PF('dlg2').show();" update="frmCadastroOdont:mdente">
+						<f:setPropertyActionListener value="#{odonto}" target="#{pesquisaOdontogramaBean.buscarDentesSelecionado}"/>
+					</p:commandButton>
+				</p:column>
+				
+				 <p:column headerText="Ações" >
+					<p:button outcome="OdontogramaAtualizar" icon="fa fa-edit">
+						<f:param name="codigo" value="#{odonto.codigo}" />
+					</p:button>
+				 	<p:commandButton icon="fa fa-trash" action="#{pesquisaOdontogramaBean.deletarOdontograma()}" update="frmCadastroOdont:tabelaOdonto">
+     				   <p:confirm header="Confirmation" message="Tem certeza que deseja deletar o cliente?" icon="ui-icon-alert" />
+   					   <f:setPropertyActionListener value="#{odonto}" target="#{pesquisaOdontogramaBean.odontogramaSelecionado}" />
+   					  
+   					</p:commandButton>
+   					 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		       			 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		      			 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		   			 </p:confirmDialog>
+				</p:column> 
+			</p:dataTable>
+			<p:dialog header="Dentes" widgetVar="dlg2" modal="true" width="600">
+   					<p:dataTable id="mdente" var="dente" value="#{pesquisaOdontogramaBean.buscarDentesSelecionado.dentes}"
+   								 reflow="true">
+   						
+   						<p:column headerText="Numero do dente" >
+   							<h:outputText value="#{dente.numeroDente}" />
+   						</p:column>
+   						<p:column headerText="Região" >
+   							<h:outputText value="#{dente.regiao}" />
+   						</p:column>
+   						<p:column headerText="Observação" >
+   							<h:outputText value="#{dente.observacao}" />
+   						</p:column>
+   						<p:column headerText="ações">
+   							<p:button outcome="DenteAtualizar" icon="fa fa-edit">
+								<f:param name="codigo" value="#{dente.codigo}" />
+							</p:button>
+							<p:commandButton icon="fa fa-trash" action="#{pesquisaOdontogramaBean.deletarDente()}" update="mdente">
+								<p:confirm header="Confirmation" message="Tem certeza que deseja deletar o dente?" icon="ui-icon-alert" />
+								<f:setPropertyActionListener value="#{dente}" target="#{pesquisaOdontogramaBean.denteSelecionado}"></f:setPropertyActionListener>
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	       						 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	      						 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	   						 </p:confirmDialog> 
+							 <p:commandButton icon="fa fa-list" onclick="PF('modalC').show();"
+									action="#{pesquisaOdontogramaBean.buscarDenteProcedimento}" update="listaProc">
+								<f:setPropertyActionListener value="#{dente}" target="#{pesquisaOdontogramaBean.denteProcedimentosSelecionado}"/>
+							</p:commandButton>
+							 <p:dialog  header="Procedimentos" widgetVar="modalC" modal="false" width="400">
+  								<p:dataList id="listaProc" var="proc" value="#{pesquisaOdontogramaBean.denteProcedimentosSelecionado.procedimentos}">
+  									Procedimento: #{proc.procedimento}
+  									<br/><br />
+  								</p:dataList>
+							</p:dialog> 
+   						</p:column>
+   					</p:dataTable>
+				</p:dialog>   
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

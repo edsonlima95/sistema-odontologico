@@ -1,0 +1,50 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Cadastro de clientes</ui:define>
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:viewParam name="codigo" value="#{cadastroFuncionarioBean.funcionario}"/>
+		</f:metadata>
+		<h1 class="cor-titulo">Cadastro de funcionario</h1>
+		<h:form id="frmCadastro">
+			<p:breadCrumb>				
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Funcionarios" url="/funcionario/PesquisaFuncionario.xhtml" />
+			</p:breadCrumb>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:panelGrid columns="2" layout="grid" id="panel" columnClasses="ui-grid-col-2, ui-grid-col-10">
+					
+				<p:outputLabel value="Nome:" />
+				<p:inputText value="#{cadastroFuncionarioBean.funcionario.nome}" required="true" requiredMessage="O campo nome é obrigatório" />
+				
+				<p:outputLabel value="Celular de contato:" />
+				<p:inputMask  mask="(99) 99999-9999" value="#{cadastroFuncionarioBean.funcionario.celularContato}" required="true" requiredMessage="O campo celular contato é obrigatório" />
+				
+				<p:outputLabel value="Telefone de contato:" />
+				<p:inputMask   mask="(99) 9999-9999" value="#{cadastroFuncionarioBean.funcionario.telefoneContato}" />
+				
+				<p:outputLabel value="CPF:" />
+				<p:inputMask  mask="999.999.999-99" value="#{cadastroFuncionarioBean.funcionario.cpf}" required="true" requiredMessage="O campo cpf é obrigatório" />
+				
+				<p:outputLabel value="RG:" />
+				<p:inputMask  value="#{cadastroFuncionarioBean.funcionario.rg}" required="true" requiredMessage="O campo rg é obrigatório"/>
+				
+				<p:outputLabel value="E-mail:" />
+				<p:inputText value="#{cadastroFuncionarioBean.funcionario.email}" />
+				
+				<p:outputLabel value="Nivel" />
+				<p:selectOneMenu id="nivel" value="#{cadastroFuncionarioBean.funcionario.nivel}">
+	      		     <f:selectItem itemLabel="Admin" itemValue="1" />
+	      		     <f:selectItem itemLabel="Funcionario" itemValue="2" />
+      			</p:selectOneMenu>  
+			</p:panelGrid>
+			<p:commandButton value="Salvar" style="margin-right: 2pc; margin-top:20px" action="#{cadastroFuncionarioBean.salvar}" />
+			<p:commandButton type="reset" value="Cancel" />
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

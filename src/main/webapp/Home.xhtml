@@ -1,0 +1,51 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+	<section class="d-flex flex-nowrap wrapper1">
+		<div class="col-md-5 col-lg-3 clientes">
+			<i class="fa fa-users fa-3x" aria-hidden="true"></i>
+			<p>Usuários</p>
+			<h:outputText value="#{pesquisaClienteBean.countUsuarios()}" />
+		</div>
+		<div class="col-md-5 col-lg-3 dentistas">
+			<i class="fa fa-user-md fa-3x" aria-hidden="true"></i>
+			<p>Médicos</p>
+			<h:outputText value="#{pesquisaDentistaBean.countDentistas()}" />
+		</div>
+		<div class="col-md-5 col-lg-3 consultas">
+			<i class="fa fa-stethoscope fa-3x" aria-hidden="true"></i>
+			<p>Consultas</p>
+			<h:outputText value="#{pesquisaConsultaBean.countConsultas()}" />
+		</div>
+		<div class="col-md-5 col-lg-3 convenios">
+			<i class="fa fa-address-card-o fa-3x" aria-hidden="true"></i>
+			<p>Convênios</p>
+			<h:outputText value="#{pesquisaConvenioBean.countConvenios()}" />
+		</div>
+	</section>
+		<section class="d-flex flex-nowrap wrapper1">
+		<div class="col-lg-3 clientes p">
+			<i class="fa fa-money fa-3x" aria-hidden="true"></i>
+			<p>Caixa atual</p>
+			<h:outputText value="#{pesquisaConsultaBean.valorTotalMes()}" />
+		</div>
+		<div class="col-lg-3 funcionarios p">
+			<i class="fa fa-stethoscope fa-3x" aria-hidden="true"></i>
+			<p>Funcionários</p>
+			<h:outputText value="#{pesquisaFuncionarioBean.countFunc()}" />
+		</div>
+		<div class="col-lg-3 consultas p">
+			<h1>Teste7</h1>
+		</div>
+		<div class="col-lg-3 convenios p">
+			<h1>Teste8</h1>
+		</div>
+	</section>
+	</ui:define>
+
+</ui:composition>

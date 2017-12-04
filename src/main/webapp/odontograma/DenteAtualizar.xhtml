@@ -1,0 +1,42 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Odontograma</ui:define>
+	<ui:define name="conteudo">
+	<f:metadata>
+		<f:viewParam name="codigo" value="#{cadastroDenteBean.dente}"/>
+	</f:metadata>
+	<h:form id="frmDenteCadastro">
+		<h3 class="text-center">Cadastro de dentes</h3>
+		<p:messages id="messages" autoUpdate="true" closable="true" />	 
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="Cadastrar" action="#{cadastroDenteBean.salvar}" />	
+				</f:facet>
+			</p:toolbar>
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid">
+				<p:outputLabel value="Numero do dente." />
+				<p:inputText value="#{cadastroDenteBean.dente.numeroDente}" required="true" 
+				requiredMessage="O numero do dente e obrigatório"/>
+				
+				<p:outputLabel value="Região do dente." />
+				<p:inputText value="#{cadastroDenteBean.dente.regiao}" required="true"
+								requiredMessage="O campo região do dente é obrigatório" />
+		
+				<p:outputLabel value="Observação" />
+				<p:textEditor value="#{cadastroDenteBean.dente.observacao}" height="100"/>
+				
+			<p:selectManyCheckbox id="grid" value="#{cadastroDenteBean.dente.procedimentos}" 
+			  converter="procedimentoConverter" >
+		 			    <f:selectItems value="#{cadastroDenteBean.procedimentos}" var="procedimento"
+		 			     itemLabel="#{procedimento.procedimento}" itemValue="#{procedimento}" />
+					 </p:selectManyCheckbox>
+		 	
+	 	 </p:panelGrid>
+	</h:form><!-- fim do form do dente. -->
+	</ui:define>
+	
+</ui:composition>

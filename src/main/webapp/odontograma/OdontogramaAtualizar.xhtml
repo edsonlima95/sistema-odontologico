@@ -1,0 +1,84 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Odontograma</ui:define>
+	<ui:define name="conteudo">
+	<f:metadata>
+		<f:viewParam name="codigo" value="#{cadastroOdontogramaBean.odontograma}"/>
+	</f:metadata>
+	<h:form id="frmDente">
+		<p:messages id="messages" autoUpdate="true" closable="true" />
+				<p:toolbar>
+					<f:facet name="left">
+						<h3>Cadastro de dentes</h3>
+					</f:facet>
+					<f:facet name="right">
+						   <p:commandButton value="Adicionar" action="#{cadastroOdontogramaBean.add()}" update="frmOdonto"/>	
+					</f:facet>
+				</p:toolbar>
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid">
+				<p:outputLabel value="Numero do dente." />
+				<p:inputText value="#{cadastroDenteBean.dente.numeroDente}" />
+				
+				<p:outputLabel value="Região do dente." />
+				<p:inputText value="#{cadastroDenteBean.dente.regiao}" />
+		
+				<p:outputLabel value="Observação" />
+				<p:textEditor value="#{cadastroDenteBean.dente.observacao}" height="100"/>
+				
+			<p:selectManyCheckbox id="grid" value="#{cadastroDenteBean.dente.procedimentos}" 
+			  converter="procedimentoConverter" >
+		 			    <f:selectItems value="#{cadastroDenteBean.procedimentos}" var="procedimento"
+		 			     itemLabel="#{procedimento.procedimento}" itemValue="#{procedimento}" />
+					 </p:selectManyCheckbox>
+	 	 </p:panelGrid>
+	</h:form><!-- fim do form do dente. -->
+	<!-- CADASTRO ODONTOGRAMA -->
+	<h:form id="frmOdonto">
+			<p:toolbar>
+				<f:facet name="left">
+					<h3>Odontograma</h3>
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton value="Salvar" action="#{cadastroOdontogramaBean.salvar()}"/>
+				</f:facet>
+			</p:toolbar>
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid">
+				<p:outputLabel value="Clientes:" />
+				<p:selectOneMenu value="#{cadastroOdontogramaBean.odontograma.cliente}" required="true"
+									requiredMessage="O campo cliente e obrigatório">
+					<f:selectItem itemLabel="selecione um cliente" noSelectionOption="true"/>
+					<f:selectItems var="cliente" value="#{cadastroOdontogramaBean.clientes}"
+					 itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Dentista: " />
+				<p:selectOneMenu value="#{cadastroOdontogramaBean.odontograma.dentista}" required="true"
+								requiredMessage="O campo dentista é obrigatório">
+					<f:selectItem itemLabel="selecione uma dentista" noSelectionOption="true"/>
+					<f:selectItems var="dentista" value="#{cadastroOdontogramaBean.dentistas}"
+					 itemLabel="#{dentista.nome}" itemValue="#{dentista}" />
+				 </p:selectOneMenu>
+				 
+			  	<p:outputLabel value="Valor:" />
+				<p:inputText required="true" requiredMessage="O campo valor é obrigatório"
+							 value="#{cadastroOdontogramaBean.odontograma.valor}" />
+			
+				<p:outputLabel value="Data." />
+				<p:calendar value="#{cadastroOdontogramaBean.odontograma.data}" pattern="dd/MM/yyyy" required="true"
+							requiredMessage="O campo data é obrigatório" />
+							
+				<p:outputLabel value="Status:" />		
+				<p:selectOneRadio value="#{cadastroOdontogramaBean.odontograma.status}" rendered="true"
+									requiredMessage="O campo status é obrigatório" >
+						<f:selectItem  itemLabel="Em andamento" itemValue="Andamento"/>
+						<f:selectItem itemLabel="Finalizado" itemValue="Finalizado"/>
+				</p:selectOneRadio>
+			</p:panelGrid>
+	</h:form><!-- fim do form do odontograma. -->
+</ui:define>
+</ui:composition>

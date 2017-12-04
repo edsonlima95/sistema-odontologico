@@ -1,0 +1,65 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Cadastro de clientes</ui:define>
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:viewParam name="codigo" value="#{cadastroConsultaBean.consulta}"/>
+		</f:metadata>
+			<h1 class="cor-titulo">Cadastro de consultas</h1>
+		<h:form id="frmCadastro">			
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Consultas" url="PesquisaConsulta.xhtml" />
+			</p:breadCrumb>	
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+		
+			<p:panelGrid columns="2" layout="grid" id="panel" columnClasses="ui-grid-col-2, ui-grid-col-10">
+				<p:outputLabel value="Clientes:" />
+				<p:selectOneMenu value="#{cadastroConsultaBean.consulta.cliente}"
+				required="true" requiredMessage="O campo cliente é obrigatorio">
+					<f:selectItem itemLabel="selecione um cliente" noSelectionOption="true"/>
+					<f:selectItems var="cliente" value="#{cadastroConsultaBean.clientes}"
+					 itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
+				</p:selectOneMenu>
+					
+				<p:outputLabel value="Dentista: " />
+				<p:selectOneMenu value="#{cadastroConsultaBean.consulta.dentista}"
+				required="true" requiredMessage="O dentista é obrigatório" >
+					<f:selectItem itemLabel="selecione uma dentista" noSelectionOption="true"/>
+					<f:selectItems var="dentista" value="#{cadastroConsultaBean.dentistas}"
+					 itemLabel="#{dentista.nome}" itemValue="#{dentista}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Data da consulta:" />
+				<p:calendar value="#{cadastroConsultaBean.consulta.dataConsulta}" pattern="dd/MM/yyyy HH:mm" stepMinute="10" />
+			
+				<p:outputLabel value="Valor do pagamento:" />
+				<p:inputText value="#{cadastroConsultaBean.consulta.valorPagamento}" >
+					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+				</p:inputText>
+				
+				<p:outputLabel value="Tipo de pagamento:" />
+				<p:selectOneMenu value="#{cadastroConsultaBean.consulta.tipoPagamento}"
+				required="true" requiredMessage="O campo tipo pagamento é obrigatorio">
+					<f:selectItem itemLabel="selecione uma opção" noSelectionOption="true"/>
+					<f:selectItems var="pagamento" value="#{cadastroConsultaBean.tiposPagamentos}"
+					 itemLabel="#{pagamento}" itemValue="#{pagamento}" />
+				</p:selectOneMenu>
+					
+				<p:outputLabel value="Status:" />
+				<p:selectOneRadio value="#{cadastroConsultaBean.consulta.status}">
+					<f:selectItem itemLabel="Pago" itemValue="pago"/>
+					<f:selectItem itemLabel="Pendente" itemValue="pendente"/>
+				</p:selectOneRadio>
+			
+				</p:panelGrid>
+				<p:commandButton value="Salvar" style="margin-right: 2pc; margin-top:20px" action="#{cadastroConsultaBean.salvar}" />
+				<p:commandButton type="reset" value="Cancel" />
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

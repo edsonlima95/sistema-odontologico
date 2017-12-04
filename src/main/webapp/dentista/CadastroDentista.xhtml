@@ -1,0 +1,73 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Cadastro de dentistas</ui:define>
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:viewParam name="codigo" value="#{cadastroDentistaBean.dentista}"/>
+		</f:metadata>
+		<h1 class="cor-titulo">Cadastro de dentista</h1>
+			
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Dentistas" url="PesquisaDentista.xhtml" />
+			</p:breadCrumb>
+		<p:messages id="messages" autoUpdate="true" closable="true" />
+			<h:form id="frmCadastroDentista">
+			<!-- LADO ESQUERDO -->
+			<div class="ui-g-12 ui-md-12 ui-lg-6">
+				<p:panelGrid columns="2" id="panel" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-9">
+					<p:outputLabel value="CRO:" />
+					<p:inputText value="#{cadastroDentistaBean.dentista.cro}" required="true" requiredMessage="O campo cro é obrigatório" />
+					
+					<p:outputLabel value="Nome:" />
+					<p:inputText  value="#{cadastroDentistaBean.dentista.nome}" required="true" requiredMessage="O campo nome é obrigatório" />
+					
+					<p:outputLabel value="Endereço:" />
+					<p:inputText  value="#{cadastroDentistaBean.dentista.endereco}" required="true" requiredMessage="O campo endereço é obrigatório" />
+					
+					<p:outputLabel value="Estado:" />
+					<p:selectOneMenu value="#{cadastroDentistaBean.dentista.estado}"
+					required="true" requiredMessage="O campo estado é obrigatorio" converter="estadoConverter">
+						<f:selectItem itemLabel="selecione um estado" itemDisabled="true" noSelectionOption="true"/>
+						<f:selectItems var="estado" value="#{cadastroDentistaBean.estados}"
+						 itemLabel="#{estado.nome}" itemValue="#{estado}" />
+					 <p:ajax event="itemSelect" listener="#{cadastroDentistaBean.onSelect}" update="frmCadastroDentista:cidade" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Cidade: " />
+					<p:selectOneMenu id="cidade" value="#{cadastroDentistaBean.dentista.cidade}"
+					required="true" requiredMessage="O cidade é obrigatorio" converter="cidadeConverter">
+						<f:selectItem itemLabel="selecione uma cidade" itemDisabled="true" noSelectionOption="true"/>
+						<f:selectItems var="cidade" value="#{cadastroDentistaBean.cidades}"
+						 itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</div>
+			<!-- LADO DIREITO -->
+			<div class="ui-g-12 ui-md-12 ui-lg-6">
+				<p:panelGrid columns="2" layout="grid" id="panel2" columnClasses="ui-grid-col-3,ui-grid-col-9">
+					<p:outputLabel value="Bairro:" />
+					<p:inputText  value="#{cadastroDentistaBean.dentista.bairro}" required="true" requiredMessage="O campo bairro é obrigatório" />
+						
+					<p:outputLabel value="Telefone de contato:" />
+					<p:inputMask   mask="(99) 9999-9999" value="#{cadastroDentistaBean.dentista.telefoneContato}" />
+					
+					<p:outputLabel value="Celular de contato:" />
+					<p:inputMask  mask="(99) 99999-9999" value="#{cadastroDentistaBean.dentista.celularContato}" required="true" requiredMessage="O campo celular contato é obrigatório" />
+						
+					<p:outputLabel value="E-mail:" />
+					<p:inputText  value="#{cadastroDentistaBean.dentista.email}" />
+				</p:panelGrid>
+			</div>
+			<div class="ui-g-12">
+				<p:commandButton value="Salvar" style="margin-right: 2pc;" action="#{cadastroDentistaBean.salvar}" />
+				<p:commandButton type="reset" value="Cancel" /> 
+			</div>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

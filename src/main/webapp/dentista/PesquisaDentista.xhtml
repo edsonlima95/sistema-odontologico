@@ -1,0 +1,61 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Cadastro de dentista</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmCadastroDentista">
+			<h1 class="cor-titulo">Pesquisa dentista</h1>
+			
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Dentista" url="CadastroDentista.xhtml" />
+			</p:breadCrumb>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:dataTable id="tabelaDentista" widgetVar="dentistaTable" var="dentista" value="#{pesquisaDentistaBean.lazyDentistas}"
+			 reflow="true"  paginator="true" paginatorAlwaysVisible="false" rows="5" lazy="true" paginatorPosition="bottom">
+				 <f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Buscar " />
+		                <p:inputText id="globalFilter" onkeyup="PF('dentistaTable').filter()" style="width:150px" placeholder="Digite o nome"/>
+		            </p:outputPanel>
+        		</f:facet>
+				<p:column headerText="Codigo">
+					<h:outputText value="#{dentista.codigo}" />
+				</p:column>
+				<p:column filterBy="#{dentista.nome}" headerText="Nome" >
+					<h:outputText value="#{dentista.nome}"  />
+				</p:column>
+				<p:column filterBy="#{dentista.cro}" headerText="Cro" >
+					<h:outputText value="#{dentista.cro}"  />
+				</p:column>
+				<p:column headerText="Telefone Contato">
+					<h:outputText value="#{dentista.telefoneContato}" />
+				</p:column>
+				<p:column headerText="Celular" >
+					<h:outputText value="#{dentista.celularContato}"/>
+				</p:column>
+				<p:column filterBy="#{dentista.cidade.nome}" headerText="Cidade" >
+					<h:outputText value="#{dentista.cidade.nome}" />
+				</p:column>
+				
+				<p:column headerText="Ações" >
+					<p:button outcome="CadastroDentista" icon="fa fa-edit">
+						<f:param name="codigo" value="#{dentista.codigo}" />
+					</p:button>
+					<p:commandButton icon="fa fa-trash" action="#{pesquisaDentistaBean.deletar}" update="tabelaDentista" >
+     				   <p:confirm header="Confirmation" message="Tem certeza que deseja deletar o dentista?" icon="ui-icon-alert" />
+   					   <f:setPropertyActionListener value="#{dentista}" target="#{pesquisaDentistaBean.dentistaSelecionado}" />
+   					</p:commandButton>
+   					 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		       			 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		      			 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		   			 </p:confirmDialog> 
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

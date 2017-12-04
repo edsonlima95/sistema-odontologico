@@ -1,0 +1,9 @@
+/*TELA LOGIN */
+body {background-image: url("../img/loginpaper.jpg"); background-repeat: no-repeat; background-size: cover; height: 100%; }
+section.login {background-color: #343a40; background: rgba(0,0,0,0.7); width: 400px;
+				 margin-left: auto; margin-right: auto; border-radius: 5px; padding: 15px 30px; margin-top: 150px;}
+section.login input {margin-bottom: 20px;}
+
+@media screen and () {
+	
+}

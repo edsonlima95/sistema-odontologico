@@ -1,0 +1,60 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Pesquisar consulta</ui:define>
+	<ui:define name="conteudo">
+		<h1 class="cor-titulo">Pesquisa consultas</h1>
+		<h:form id="frmCadastraConsulta">
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Consulta" url="CadastroConsulta.xhtml" />
+			</p:breadCrumb>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:dataTable id="tabelaConsulta" var="consulta" value="#{pesquisaConsultaBean.lazyConsultas}"
+						widgetVar="tabelaConsulta" reflow="true" paginator="true" lazy="true"
+						paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="5">
+				<f:facet name="header">
+		             <p:outputPanel>
+		                <h:outputText value="Buscar " />
+		                <p:inputText id="globalFilter"  onkeyup="PF('tabelaConsulta').filter()" style="width:150px" placeholder="Digite o nome"/>
+		            </p:outputPanel> 
+        		</f:facet>
+				<p:column headerText="Codigo"  >
+					<h:outputText value="#{consulta.codigo}" />
+				</p:column>
+				<p:column headerText="Data da consulta">
+					<h:outputText value="#{consulta.dataConsulta}">
+						  <f:convertDateTime pattern="dd-MM-yyyy HH:mm" timeZone="#{initParam.timezone}"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Paciente" filterBy="#{consulta.cliente.nome}">
+					<h:outputText value="#{consulta.cliente.nome}"  />
+				</p:column>
+				<p:column headerText="Dentista" filterBy="#{consulta.dentista.nome}" >
+					<h:outputText value="#{consulta.dentista.nome}"  />
+				</p:column>
+				<p:column headerText="Estatus" >
+					<h:outputText value="#{consulta.status}" />
+				</p:column>
+				
+				<p:column headerText="Ações">
+					<p:button outcome="CadastroConsulta" icon="fa fa-edit">
+						<f:param name="codigo" value="#{consulta.codigo}" />
+					</p:button>
+					<p:commandButton icon="fa fa-trash" action="#{pesquisaConsultaBean.deletar}" update="tabelaConsulta" >
+     				   <p:confirm header="Confirmation" message="Tem certeza que deseja deletar a consulta?" icon="ui-icon-alert" />
+   					   <f:setPropertyActionListener value="#{consulta}" target="#{pesquisaConsultaBean.consultaSelecionada}" />
+   					</p:commandButton>
+   					 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		       			 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		      			 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		   			 </p:confirmDialog>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

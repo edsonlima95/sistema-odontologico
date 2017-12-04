@@ -1,0 +1,58 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Pesquisar consulta</ui:define>
+	<ui:define name="conteudo">
+		<h1 class="cor-titulo">Pesquisa convênios</h1>
+		<h:form id="frmCadastraConvenio">
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Convênio" url="CadastroConvenio.xhtml" />
+			</p:breadCrumb>	
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:dataTable id="tabelaConvenio" var="convenio" value="#{pesquisaConvenioBean.lazyConvenios}"
+						 reflow="true" paginator="true" rows="5" lazy="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<f:facet name="header">
+		             <p:outputPanel>
+		                <h:outputText value="Buscar " />
+		                <p:inputText id="globalFilter" onkeyup="PF('clienteTable').filter()" style="width:150px" placeholder="Digite o nome"/>
+		            </p:outputPanel> 
+        		</f:facet>
+				<p:column headerText="Codigo"  >
+					<h:outputText value="#{convenio.codigo}" />
+				</p:column>
+				<p:column headerText="Nome"  >
+					<h:outputText value="#{convenio.nome}" />
+				</p:column>
+				<p:column headerText="Contato"  >
+					<h:outputText value="#{convenio.contato}" />
+				</p:column>
+				<p:column headerText="Email"  >
+					<h:outputText value="#{convenio.email}" />
+				</p:column>
+				<p:column headerText="Data"  >
+					<h:outputText value="#{convenio.dataCadastro}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</p:column>				
+				<p:column headerText="Ações">
+					<p:button outcome="CadastroConvenio" icon="fa fa-edit">
+						<f:param name="codigo" value="#{convenio.codigo}" />
+					</p:button>
+					 <p:commandButton icon="fa fa-trash" action="#{pesquisaConvenioBean.deletar()}" update="tabelaConvenio">
+     				   <p:confirm header="Confirmation" message="Tem certeza que deseja deletar o convênio?" icon="ui-icon-alert" />
+   					   <f:setPropertyActionListener value="#{convenio}" target="#{pesquisaConvenioBean.convenioSelecionado}" />
+   					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+       			 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+      			 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+   			 </p:confirmDialog> 
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

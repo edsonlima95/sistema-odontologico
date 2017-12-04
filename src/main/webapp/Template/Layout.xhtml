@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title><ui:insert name="titulo" /></title>
+ 
+ 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+ 	<h:outputStylesheet library="css" name="sistema.css" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js" target="body" />
+	<h:outputScript library="js" target="body" name="bootstrap.min.js" />
+	<h:outputScript target="body" library="js" name="sistema.js" />
+ 
+</h:head>
+<h:body>
+	<nav class="navbar navbar-dark bg-dark fixed-top">
+		 <a href="#" id="fechaMenu" style="margin-left: 20px"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></a>
+	</nav>
+	<!-- Não sei o que e mas esse form ao laçar a parte de conteudo
+	esta dando um conflito e nao ta salvando nada e se tirar do menu da um erro. -->
+	<h:form> 	
+		<nav class="menu-left fixed-top">
+			<ui:insert name="menu">
+				 <ui:include src="/Template/inc/menu.xhtml" /> 
+			</ui:insert>
+		</nav>
+	 </h:form>
+		
+		<div class="col-md-12 main">	
+			<ui:insert name="conteudo" />
+		</div>
+		
+</h:body>
+</html>

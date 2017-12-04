@@ -1,0 +1,51 @@
+@charset "utf-8";
+table.table td {border-top: none}
+
+i {color: #adb5bd}
+i.seta-direita {float: right; margin-top: 8px}
+
+/* COR DOS TITULOS */
+.cor-titulo {color: #959191; margin-bottom: 40px}
+
+/* EFEITOS PARA O JQUERY */
+nav.menu-left.menu-abri {margin-left: 0px; transition: 0.5s;}
+.conteudo {transition: 0.5s; width: 100% !important;}
+
+/* NAVBAR */
+nav.navbar {height: 60px}
+
+/* MENU LATERAL */
+nav.menu-left {position: fixed; top: 56px; bottom: 0; transition: 0.5s; background-color: #343a40 !important;
+ overflow: hidden; width: 17%; margin-left: -18%; padding: 10px}
+nav.menu-left div#accordion ul {list-style: none;}
+nav.menu-left div#accordion ul a {color: #adb5bd; margin-left: 7px; font-size: 18px; font-weight: lighter; text-decoration: none;}
+nav.menu-left div#accordion ul li {margin: 10px 0}
+nav.menu-left div#accordion ul li ul.ulsub {margin-left: -30px}
+/* MAIN */
+div.main {margin-top: 75px; float: right; transition: 0.5s; width: 100%}
+
+/* HOME */
+section.wrapper1 {margin-bottom: 40px; overflow: hidden;}
+section.wrapper1 i {margin-right: 20px; float: left; color: #343a40 !important}
+section.wrapper1 p {font-weight: bold; font-size: 20px}
+div.clientes {background-color: #ccc; margin-right: 10px; padding: 10px}
+div.dentistas {background-color: #c51515; margin-right: 10px; padding: 10px}
+div.consultas {background-color: #15c562; margin-right: 10px; padding: 10px}
+div.convenios {background-color: #15c5ac; margin-right: 10px; padding: 10px}
+div.funcionarios {background-color: #15c5ac; margin-right: 10px; padding: 10px}
+
+@media screen and (min-width: 990px)  {
+	nav.menu-left {margin-left: 0px;  transition: 0.5s;}
+	nav.menu-left.menu-abri {margin-left: -18%;}
+	div.main  {transition: 0.5s; width: 83%}
+	
+}
+
+@media screen and (min-width: 320px) and (max-width: 989px){
+	section.wrapper1 {flex-wrap: wrap !important; justify-content: center;}
+}
+
+@media screen and (max-width: 767px)  {
+	nav.menu-left {width: 250px; margin-left: -252px}
+}
+

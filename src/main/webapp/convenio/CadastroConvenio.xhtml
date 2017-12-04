@@ -1,0 +1,39 @@
+<ui:composition template="/Template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Cadastro de convênio</ui:define>
+	<ui:define name="conteudo">
+		<h1 class="cor-titulo">Cadastro de convênio</h1>
+		<f:metadata>
+			<f:viewParam name="codigo" value="#{cadastroConvenioBean.convenio}" converter="convenioConverter"/>
+		</f:metadata>
+		<h:form id="frmCadastroConvenio">
+			<p:breadCrumb>
+   				 <p:menuitem value="Home" url="/" />
+   				 <p:menuitem value="Convênios" url="PesquisaConvenio.xhtml" />
+			</p:breadCrumb>	
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:panelGrid columns="2" layout="grid" id="panel" columnClasses="ui-grid-col-2, ui-grid-col-10" style="margin: 20px 0">
+				
+				<p:outputLabel value="Nome:" />
+				<p:inputText value="#{cadastroConvenioBean.convenio.nome}" required="true" requiredMessage="O campo nome é obrigatório" />
+				
+				<p:outputLabel value="Contato:" />
+				<p:inputMask mask="(99)99999-9999" value="#{cadastroConvenioBean.convenio.contato}" required="true" requiredMessage="O campo contato é obrigatório" />
+			
+				<p:outputLabel value="E-mail:" />
+				<p:inputText value="#{cadastroConvenioBean.convenio.email}" required="true" requiredMessage="O campo email é obrigatório" />
+			
+				<p:outputLabel value="Data:" />
+				<p:calendar value="#{cadastroConvenioBean.convenio.dataCadastro}" pattern="dd/MM/yyyy" required="true" requiredMessage="O campo data é obrigatório" />
+			
+			</p:panelGrid>
+			<p:commandButton value="Salvar" style="margin-right: 2pc;" action="#{cadastroConvenioBean.salvar}" />
+			<p:commandButton type="reset" value="Cancel" />
+		</h:form>
+	</ui:define>
+	
+</ui:composition>
